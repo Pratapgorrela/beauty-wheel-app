@@ -1,0 +1,8 @@
+{
+	"name": "Debug Windows Hermes",
+	"cwd": "${workspaceFolder}",
+	"type": "reactnativedirect",
+	"request": "launch",
+	"platform": "windows"
+}
+

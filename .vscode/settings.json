@@ -11,5 +11,7 @@
   "prettier.bracketSpacing": true,
   "prettier.proseWrap": "always",
   "prettier.tabWidth": 2,
-  "editor.codeActionsOnSave": { "source.fixAll": true }
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  }
 }
