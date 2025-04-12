@@ -5,8 +5,8 @@ import { Alert, Image, ScrollView, Text, View } from "react-native";
 
 import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
-import { icons, images } from "@/constants";
 import OAuth from "@/components/OAuth";
+import { icons, images } from "@/constants";
 
 const SignIn = () => {
 	const { signIn, setActive, isLoaded } = useSignIn();
@@ -16,7 +16,27 @@ const SignIn = () => {
 		password: "",
 	});
 
-	const onSignInPress = useCallback(async () => {}, []);
+	const onSignInPress = useCallback(async () => {
+		if (!isLoaded) return;
+
+		try {
+			const signInAttempt = await signIn.create({
+				identifier: form.email,
+				password: form.password,
+			});
+
+			if (signInAttempt.status === "complete") {
+				await setActive({ session: signInAttempt.createdSessionId });
+				router.replace("/(root)/(tabs)/home");
+			} else {
+				console.log(JSON.stringify(signInAttempt, null, 2));
+				Alert.alert("Error", "Log in failed. Please try again.");
+			}
+		} catch (err: any) {
+			console.log(JSON.stringify(err, null, 2));
+			Alert.alert("Error", err.errors[0].longMessage);
+		}
+	}, [isLoaded, form]);
 
 	return (
 		<ScrollView className="flex-1 bg-white">
@@ -59,8 +79,8 @@ const SignIn = () => {
 					<Link
 						href="/sign-up"
 						className="text-lg text-center text-general-200 mt-10">
-						Don't have an account?{" "}
-						<Text className="text-blue-500">Sign Up</Text>
+						Don't have an account?
+						<Text className="text-primary-500">Sign Up</Text>
 					</Link>
 				</View>
 			</View>

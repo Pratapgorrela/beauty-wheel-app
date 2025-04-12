@@ -13,7 +13,7 @@ declare interface Driver {
 declare interface MarkerData {
 	latitude: number;
 	longitude: number;
-	id: number;
+	driver_id: number;
 	title: string;
 	profile_image_url: string;
 	car_image_url: string;
@@ -136,4 +136,13 @@ declare interface DriverCardProps {
 	item: MarkerData;
 	selected: number;
 	setSelected: () => void;
+}
+
+declare interface ServiceProps {
+	id: number;
+	name: string;
+	image: string;
+	description: string;
+	duration: string;
+	price: string;
 }
