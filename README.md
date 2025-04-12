@@ -1,4 +1,4 @@
-# Welcome to BtBus app 👋
+# Welcome to Beauty Wheel app👋
 
 # TechStack
 1. Expo - React Native Framework. Expo provides features like file-based routing, high-quality universal libraries, and the ability to write plugins that modify native code without having to manage native files.
