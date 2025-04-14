@@ -17,25 +17,26 @@ const SignIn = () => {
 	});
 
 	const onSignInPress = useCallback(async () => {
-		if (!isLoaded) return;
+		return;
+		// if (!isLoaded) return;
 
-		try {
-			const signInAttempt = await signIn.create({
-				identifier: form.email,
-				password: form.password,
-			});
+		// try {
+		// 	const signInAttempt = await signIn.create({
+		// 		identifier: form.email,
+		// 		password: form.password,
+		// 	});
 
-			if (signInAttempt.status === "complete") {
-				await setActive({ session: signInAttempt.createdSessionId });
-				router.replace("/(root)/(tabs)/home");
-			} else {
-				console.log(JSON.stringify(signInAttempt, null, 2));
-				Alert.alert("Error", "Log in failed. Please try again.");
-			}
-		} catch (err: any) {
-			console.log(JSON.stringify(err, null, 2));
-			Alert.alert("Error", err.errors[0].longMessage);
-		}
+		// 	if (signInAttempt.status === "complete") {
+		// 		await setActive({ session: signInAttempt.createdSessionId });
+		// 		router.replace("/(root)/(tabs)/home");
+		// 	} else {
+		// 		console.log(JSON.stringify(signInAttempt, null, 2));
+		// 		Alert.alert("Error", "Log in failed. Please try again.");
+		// 	}
+		// } catch (err: any) {
+		// 	console.log(JSON.stringify(err, null, 2));
+		// 	Alert.alert("Error", err.errors[0].longMessage);
+		// }
 	}, [isLoaded, form]);
 
 	return (
@@ -70,7 +71,7 @@ const SignIn = () => {
 
 					<CustomButton
 						title="Sign In"
-						onPress={onSignInPress}
+						// onPress={onSignInPress}
 						className="mt-6"
 					/>
 

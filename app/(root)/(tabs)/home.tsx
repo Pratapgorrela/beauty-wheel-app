@@ -2,19 +2,18 @@ import GoogleTextInput from "@/components/GoogleTextInput";
 import Map from "@/components/Map";
 import { icons } from "@/constants";
 import { useLocationStore } from "@/store";
-import { useAuth, useUser } from "@clerk/clerk-expo";
-import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import { View, Image, Text, TouchableOpacity } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
+import BottomSheet from "@gorhom/bottom-sheet";
+import RideBottomSheetView from "@/components/RideBottomSheetView";
 
 const Home = () => {
-	const { user } = useUser();
-	const { signOut } = useAuth();
-	// console.log("user", user);
-	const { setUserLocation, setDestinationLocation } = useLocationStore();
+	const { setUserLocation, setUserInitialLocation, resetUserLocation } =
+		useLocationStore();
 	const [hasPermissions, setHasPermissions] = useState(false);
+	const bottomSheetRef = useRef<BottomSheet>(null);
 
 	useEffect(() => {
 		const requestLocation = async () => {
@@ -24,55 +23,59 @@ const Home = () => {
 				return;
 			}
 			const location = await Location.getCurrentPositionAsync()!;
-			const address = await Location.reverseGeocodeAsync({
+			const address: Location.LocationGeocodedAddress[] =
+				await Location.reverseGeocodeAsync({
+					latitude: location.coords.latitude!,
+					longitude: location.coords.longitude!,
+				});
+
+			setUserInitialLocation({
 				latitude: location.coords.latitude!,
 				longitude: location.coords.longitude!,
+				address: `${address?.[0]?.formattedAddress?.split(",")?.[1]}, ${address?.[0]?.city}`,
 			});
 
 			setUserLocation({
 				latitude: location.coords.latitude!,
 				longitude: location.coords.longitude!,
-				address: `${address?.[0]?.name}, ${address?.[0]?.region}`,
+				address: `${address?.[0]?.formattedAddress?.split(",")?.[1]}, ${address?.[0]?.city}`,
 			});
 		};
 		requestLocation();
 	}, []);
 
-	const handleSignOut = () => {
-		signOut();
-		router.replace("/(auth)/sign-in");
+	// const handleSignOut = () => {
+	// 	signOut();
+	// 	router.replace("/(auth)/sign-in");
+	// };
+
+	const handleDestinationPress = (location: {
+		latitude: number;
+		longitude: number;
+		address: string;
+	}) => {
+		setUserLocation(location);
 	};
 
-	const handleDestinationPress = () => {};
+	const handleCrearAddress = () => {
+		resetUserLocation();
+	};
 
 	return (
-		<SafeAreaView className="bg-general-500 p-4">
-			<View className="flex flex-row items-center justify-between my-5">
-				<Text className="text-2xl font-JakartaExtraBold">
-					Welcome, {user?.emailAddresses?.[0]?.emailAddress?.split("@")?.[0]} 👋
-				</Text>
-				<TouchableOpacity
-					onPress={handleSignOut}
-					className="justify-center items-center w-10 h-10 rounded-full bg-white">
-					<Image source={icons.out} className="w-4 h-4" />
-				</TouchableOpacity>
-			</View>
-
-			{/* <GoogleTextInput
+		<View className="bg-general-500 p-1">
+			<GoogleTextInput
 				icon={icons.search}
 				containerStyle="bg-white shadow-md shadow-neutral-300"
 				handlePress={handleDestinationPress}
-			/> */}
-
-			<>
-				<Text className="text-xl font-JakartaBold mt-5 mb-3">
-					Your current location
-				</Text>
-				<View className="flex flex-row items-center bg-transparent h-[500px]">
+				handleClear={handleCrearAddress}
+			/>
+			<View className="h-full">
+				<View className="flex flex-row items-center bg-transparent h-[55%]">
 					<Map />
 				</View>
-			</>
-		</SafeAreaView>
+				<RideBottomSheetView bottomSheetRef={bottomSheetRef} />
+			</View>
+		</View>
 	);
 };
 

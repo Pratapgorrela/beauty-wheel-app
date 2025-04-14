@@ -24,6 +24,7 @@ import star from "@/assets/icons/star.png";
 import target from "@/assets/icons/target.png";
 import to from "@/assets/icons/to.png";
 import busMarker from "@/assets/icons/beauty-bus-map-marker.png";
+import logo from "@/assets/icons/beauty-wheel-dark-bg-logo.png";
 import check from "@/assets/images/check.png";
 import getStarted from "@/assets/images/get-started.png";
 import message from "@/assets/images/message.png";
@@ -71,6 +72,7 @@ export const icons = {
 	star,
 	target,
 	to,
+	logo,
 };
 
 export const onboardingList = [
@@ -100,3 +102,5 @@ export const onboardingList = [
 export const data = {
 	onboardingList,
 };
+
+export const BookingOptions = ["Book Now", "Schedule"];
