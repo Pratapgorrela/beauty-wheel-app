@@ -3,12 +3,31 @@ import { create } from "zustand";
 import { DriverStore, LocationStore, MarkerData } from "@/types/type";
 
 export const useLocationStore = create<LocationStore>((set) => ({
+	userInitialLatitude: null,
+	userInitialLongitude: null,
+	userInitialAddress: null,
 	userLatitude: null,
 	userLongitude: null,
 	userAddress: null,
 	destinationLatitude: null,
 	destinationLongitude: null,
 	destinationAddress: null,
+	setUserInitialLocation: ({
+		latitude,
+		longitude,
+		address,
+	}: {
+		latitude: number;
+		longitude: number;
+		address: string;
+	}) => {
+		set(() => ({
+			userInitialLatitude: latitude,
+			userInitialLongitude: longitude,
+			userInitialAddress: address,
+		}));
+	},
+
 	setUserLocation: ({
 		latitude,
 		longitude,
@@ -47,6 +66,14 @@ export const useLocationStore = create<LocationStore>((set) => ({
 		// if driver is selected and now new location is set, clear the selected driver
 		const { selectedDriver, clearSelectedDriver } = useDriverStore.getState();
 		if (selectedDriver) clearSelectedDriver();
+	},
+
+	resetUserLocation: () => {
+		set(() => ({
+			userLatitude: null,
+			userLongitude: null,
+			userAddress: null,
+		}));
 	},
 }));
 

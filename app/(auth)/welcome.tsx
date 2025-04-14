@@ -14,7 +14,7 @@ const Onboarding = () => {
 	return (
 		<SafeAreaView className="flex h-full items-center justify-between bg-white">
 			<TouchableOpacity
-				onPress={() => router.replace("/(auth)/sign-in")}
+				onPress={() => router.replace("/(auth)/sign-up")}
 				className="w-full flex justify-end items-end p-5">
 				<Text className="text-black text-md font-JakartaBold">Skip</Text>
 			</TouchableOpacity>
@@ -51,7 +51,7 @@ const Onboarding = () => {
 						? router.replace("/(auth)/sign-up")
 						: swiperRef.current?.scrollBy(1);
 				}}
-				className="w-11/12 mt-10 p-3"
+				className="!w-[80%] mt-10 p-3 content-center"
 			/>
 		</SafeAreaView>
 	);

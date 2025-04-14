@@ -1,91 +1,65 @@
-import { Tabs } from "expo-router";
-import { Image, ImageSourcePropType, View } from "react-native";
+import "react-native-gesture-handler";
+import { Drawer } from "expo-router/drawer";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
+import { Text } from "react-native";
+import { useUser } from "@clerk/clerk-expo";
 
-import { icons } from "@/constants";
+const DrayerLayout = () => {
+	const { user } = useUser();
 
-const TabIcon = ({
-	source,
-	focused,
-}: {
-	source: ImageSourcePropType;
-	focused: boolean;
-}) => (
-	<View
-		className={`flex flex-row justify-center items-center rounded-full ${focused ? "bg-general-400" : ""}`}>
-		<View
-			className={`rounded-full w-12 h-12 items-center justify-center ${focused ? "bg-general-400" : ""}`}>
-			<Image
-				source={source}
-				tintColor="white"
-				resizeMode="contain"
-				className="w-7 h-7"
-			/>
-		</View>
-	</View>
-);
-
-export default function Layout() {
 	return (
-		<Tabs
-			initialRouteName="home"
-			screenOptions={{
-				tabBarActiveTintColor: "white",
-				tabBarInactiveTintColor: "white",
-				tabBarShowLabel: false,
-				tabBarStyle: {
-					backgroundColor: "#333333",
-					borderRadius: 50,
-					paddingBottom: 20, // ios onlya
-					overflow: "hidden",
-					margin: 12,
-					height: 68,
-					display: "flex",
-					justifyContent: "center",
-					alignItems: "center",
-					flexDirection: "row",
-					position: "absolute",
-				},
-			}}>
-			<Tabs.Screen
-				name="home"
-				options={{
-					title: "Home",
-					headerShown: false,
-					tabBarIcon: ({ focused }) => (
-						<TabIcon source={icons.home} focused={focused} />
-					),
-				}}
-			/>
-			<Tabs.Screen
-				name="rides"
-				options={{
-					title: "Rides",
-					headerShown: false,
-					tabBarIcon: ({ focused }) => (
-						<TabIcon source={icons.list} focused={focused} />
-					),
-				}}
-			/>
-			<Tabs.Screen
-				name="services"
-				options={{
-					title: "Services",
-					headerShown: false,
-					tabBarIcon: ({ focused }) => (
-						<TabIcon source={icons.chat} focused={focused} />
-					),
-				}}
-			/>
-			<Tabs.Screen
-				name="profile"
-				options={{
-					title: "Profile",
-					headerShown: false,
-					tabBarIcon: ({ focused }) => (
-						<TabIcon source={icons.profile} focused={focused} />
-					),
-				}}
-			/>
-		</Tabs>
+		<GestureHandlerRootView className="">
+			<Drawer>
+				<Drawer.Screen
+					name="home"
+					options={{
+						drawerLabel: "Home",
+						headerTitle: () => (
+							<Text className="text-2xl font-JakartaExtraBold">
+								{user?.emailAddresses?.[0]
+									? user?.emailAddresses?.[0]?.emailAddress?.split("@")?.[0]
+									: "Pratap"}
+							</Text>
+						),
+						drawerIcon: ({ size, color }) => (
+							<Ionicons name="home-outline" size={size} color={color} />
+						),
+					}}
+				/>
+				<Drawer.Screen
+					name="services"
+					options={{
+						drawerLabel: "Services",
+						headerTitle: "Beauty Services",
+						drawerIcon: ({ size, color }) => (
+							<Ionicons name="rocket" size={size} color={color} />
+						),
+					}}
+				/>
+				<Drawer.Screen
+					name="orders"
+					options={{
+						drawerLabel: "Your Orders",
+						headerTitle: "Orders",
+						drawerIcon: ({ size, color }) => (
+							<Ionicons name="bag-outline" size={size} color={color} />
+						),
+					}}
+				/>
+				<Drawer.Screen
+					name="profile"
+					options={{
+						drawerLabel: "Profile",
+						headerTitle: "Profile",
+						drawerIcon: ({ size, color }) => (
+							<Ionicons name="person-outline" size={size} color={color} />
+						),
+					}}
+				/>
+			</Drawer>
+		</GestureHandlerRootView>
 	);
-}
+};
+
+export default DrayerLayout;

@@ -14,7 +14,7 @@ import { ServiceProps } from "@/types/type";
 import { SERVICES } from "@/constants/services";
 
 export default function Services() {
-	const [selectedServices, setSelectedServices] = useState<number[]>([]);
+	const [selectedServices, setSelectedServices] = useState<number[]>([1]);
 
 	const toggleServiceSelection = (serviceId: number) => {
 		if (selectedServices.includes(serviceId)) {
@@ -70,15 +70,6 @@ export default function Services() {
 	return (
 		<SafeAreaView style={styles.container}>
 			<StatusBar barStyle="dark-content" />
-			<View style={styles.header}>
-				<TouchableOpacity style={styles.backButton}>
-					<Ionicons name="arrow-back" size={24} color="#333" />
-				</TouchableOpacity>
-				<Text style={styles.headerTitle}>Beauty Services</Text>
-				<TouchableOpacity>
-					<Ionicons name="filter-outline" size={24} color="#333" />
-				</TouchableOpacity>
-			</View>
 			<View style={styles.searchContainer}>
 				<View style={styles.searchBar}>
 					<Ionicons name="search" size={20} color="#999" />
@@ -98,7 +89,7 @@ export default function Services() {
 					<View style={styles.selectedInfo}>
 						<Text style={styles.selectedText}>
 							{selectedServices.length}
-							{selectedServices.length === 1 ? "service" : "services"}
+							{selectedServices.length === 1 ? " service " : " services "}
 							selected
 						</Text>
 						<Text style={styles.totalPrice}>${getTotalPrice()}</Text>

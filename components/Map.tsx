@@ -29,9 +29,6 @@ const Map = () => {
 		destinationLatitude,
 		destinationLongitude,
 	} = useLocationStore();
-	const { selectedDriver, setDrivers } = useDriverStore();
-
-	// const { data: drivers, loading, error } = useFetch<Driver[]>("/(api)/driver");
 	const [markers, setMarkers] = useState<MarkerData[]>([]);
 
 	useEffect(() => {
@@ -57,7 +54,7 @@ const Map = () => {
 
 	if ((!userLatitude && !userLongitude) || !markers?.length)
 		return (
-			<View className="flex justify-between items-center w-full h-[800px]">
+			<View className="flex justify-between items-center w-full h-full">
 				<ActivityIndicator size="small" color="#000" />
 			</View>
 		);
@@ -65,7 +62,7 @@ const Map = () => {
 	return (
 		<MapView
 			provider={PROVIDER_DEFAULT}
-			className="w-full h-full rounded-2xl"
+			className="w-full !h-[300px] rounded-2xl"
 			tintColor="black"
 			mapType={"standard"}
 			showsPointsOfInterest={false}
@@ -81,11 +78,7 @@ const Map = () => {
 						longitude: marker.longitude,
 					}}
 					title={marker.title}
-					image={
-						selectedDriver === +marker.driver_id
-							? icons.selectedMarker
-							: icons.marker
-					}
+					image={icons.marker}
 				/>
 			))}
 		</MapView>
