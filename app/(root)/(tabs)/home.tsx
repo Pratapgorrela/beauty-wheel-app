@@ -62,21 +62,20 @@ const Home = () => {
 	};
 
 	return (
-		<SafeAreaView className="bg-general-500 p-1">
+		<View className="bg-general-500 p-1">
 			<GoogleTextInput
 				icon={icons.search}
 				containerStyle="bg-white shadow-md shadow-neutral-300"
 				handlePress={handleDestinationPress}
 				handleClear={handleCrearAddress}
 			/>
-
 			<View className="h-full">
-				<View className="flex flex-row items-center bg-transparent h-[420px]">
+				<View className="flex flex-row items-center bg-transparent h-[55%]">
 					<Map />
 				</View>
 				<RideBottomSheetView bottomSheetRef={bottomSheetRef} />
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 };
 

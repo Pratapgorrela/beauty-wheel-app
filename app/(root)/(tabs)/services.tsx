@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
 	servicePrice: { fontSize: 16, fontWeight: "600", color: "#5a31f4" },
 	bottomBar: {
 		position: "absolute",
-		bottom: 0,
+		bottom: 38,
 		left: 0,
 		right: 0,
 		backgroundColor: "#fff",
