@@ -1,15 +1,16 @@
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
-import { Image, StatusBar, Text, TouchableOpacity, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import GoogleTextInput from "./GoogleTextInput";
-import { BookingOptions, icons } from "@/constants";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+
+import { icons } from "@/constants";
 import { useLocationStore } from "@/store";
 import { TabsAtom } from "./TabsAtom";
 import CustomButton from "./CustomButton";
 import { router } from "expo-router";
-import { BasicUsage } from "./DatePicker";
 import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import DatePicker from "./DatePicker";
+import TimePicker from "./TimePicker";
 
 const RideBottomSheetView = ({
 	bottomSheetRef,
@@ -21,11 +22,6 @@ const RideBottomSheetView = ({
 	if (!userAddress) {
 		return null;
 	}
-
-	const handleOptionChange = (option: any) => {
-		console.log(`Selected option: ${option}`);
-		// Handle the selected option (e.g., show date picker for scheduling)
-	};
 
 	const BookNowConetent = () => (
 		<View className="p-2 flex gap-4">
@@ -46,34 +42,93 @@ const RideBottomSheetView = ({
 		</View>
 	);
 
-	const ScheduleConetent = () => (
-		<View className="p-2 flex gap-4">
-			<Text className="text-lg font-JakartaSemiBold">Your Location</Text>
-			<View className="flex flex-row py-2 rounded items-center">
-				<Image
-					source={icons.target}
-					className="w-6 h-6 p-2"
-					resizeMode="contain"
-				/>
-				<Text className="font-JakartaSemiBold">{userAddress}</Text>
-			</View>
-			{/* <Text className="font-JakartaSemiBold">Date & Time</Text> */}
-			<View className="flex-1 items-center bg-[#fff] justify-center">
-				<StatusBar hidden />
-				<View className="w-[80%] h-12">
-					<TouchableOpacity className="flex border-[#fafafa] h-12 border-r-8 bg-[#fafafa] justify-between text-lg flex-col items-center px-2 mt-1">
-						<Text className="text-sm color-[#BDBDBD] h-12">12/12/2024</Text>
-						<Ionicons name="calendar" size={24} color={"#BDBDBD"} />
+	const ScheduleConetent = () => {
+		// Get current date
+		const currentDate = new Date();
+
+		// Set initial time to 10:00 AM
+		const initialTime = new Date(
+			currentDate.getFullYear(),
+			currentDate.getMonth(),
+			currentDate.getDate(),
+			10, // 10 hours (10 AM)
+			0, // 0 minutes
+			0 // 0 seconds
+			// AM
+		);
+
+		const [date, setDate] = useState(currentDate);
+		const [time, setTime] = useState<Date | undefined>(initialTime);
+		const [showDatePicker, setShowDatePicker] = useState(false);
+		const [showTimePicker, setShowTimePicker] = useState(false);
+
+		const formatDate = (value: Date) => {
+			return value?.toLocaleDateString();
+		};
+
+		const formatTime = (value?: Date) => {
+			return value?.toLocaleTimeString([], {
+				hour: "2-digit",
+				minute: "2-digit",
+			});
+		};
+
+		return (
+			<View className="p-2 flex gap-3">
+				<Text className="text-lg font-JakartaSemiBold">Your Location</Text>
+				<View className="flex flex-row py-2 rounded items-center">
+					<Image
+						source={icons.target}
+						className="w-6 h-6 p-2"
+						resizeMode="contain"
+					/>
+					<Text className="font-JakartaSemiBold">{userAddress}</Text>
+				</View>
+				<Text className="text-lg font-JakartaSemiBold">
+					Please select Date & Time:
+				</Text>
+				<View className="flex flex-row gap-4">
+					<TouchableOpacity
+						onPress={() => setShowDatePicker(!showDatePicker)}
+						className="flex flex-row p-1 gap-1 border-black border-[1px] rounded-[4px]">
+						<Ionicons name="calendar" className="w-8 h-8" size={24} />
+						<Text className="text-xl h-8 font-JakartaSemiBold">
+							{formatDate(date)}
+						</Text>
+						{showDatePicker && (
+							<DatePicker
+								showDatePicker={showDatePicker}
+								setShowDatePicker={setShowDatePicker}
+								date={date}
+								setDate={setDate}
+							/>
+						)}
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => setShowTimePicker(!showTimePicker)}
+						className="flex flex-row p-1 gap-1 border-black border-[1px] rounded-[4px]">
+						<Ionicons name="time" className="w-8 h-8" size={24} />
+						<Text className="text-xl h-8 font-JakartaSemiBold">
+							{formatTime(time)}
+						</Text>
+						{showTimePicker && (
+							<TimePicker
+								showTimePicker={showTimePicker}
+								setShowTimePicker={setShowTimePicker}
+								time={time}
+								setTime={setTime}
+							/>
+						)}
 					</TouchableOpacity>
 				</View>
+				<CustomButton
+					title="Select Services & Schedule"
+					onPress={() => router.push("/(root)/(tabs)/services")}
+					className="!w-[70%]"
+				/>
 			</View>
-			<CustomButton
-				title="Select Services & Schedule"
-				onPress={() => router.push("/(root)/(tabs)/services")}
-				className="!w-[70%]"
-			/>
-		</View>
-	);
+		);
+	};
 
 	const tabs = [
 		{
