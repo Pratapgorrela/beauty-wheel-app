@@ -13,7 +13,7 @@ declare interface Driver {
 declare interface MarkerData {
 	latitude: number;
 	longitude: number;
-	id: number;
+	driver_id: number;
 	title: string;
 	profile_image_url: string;
 	car_image_url: string;
@@ -76,10 +76,11 @@ declare interface GoogleInputProps {
 		longitude: number;
 		address: string;
 	}) => void;
+	handleClear: () => void;
 }
 
 declare interface InputFieldProps extends TextInputProps {
-	label: string;
+	label?: string;
 	icon?: any;
 	secureTextEntry?: boolean;
 	labelStyle?: string;
@@ -87,6 +88,7 @@ declare interface InputFieldProps extends TextInputProps {
 	inputStyle?: string;
 	iconStyle?: string;
 	className?: string;
+	isPhoneField?: boolean;
 }
 
 declare interface PaymentProps {
@@ -98,12 +100,24 @@ declare interface PaymentProps {
 }
 
 declare interface LocationStore {
+	userInitialLatitude: number | null;
+	userInitialLongitude: number | null;
+	userInitialAddress: string | null;
 	userLatitude: number | null;
 	userLongitude: number | null;
 	userAddress: string | null;
 	destinationLatitude: number | null;
 	destinationLongitude: number | null;
 	destinationAddress: string | null;
+	setUserInitialLocation: ({
+		latitude,
+		longitude,
+		address,
+	}: {
+		latitude: number;
+		longitude: number;
+		address: string;
+	}) => void;
 	setUserLocation: ({
 		latitude,
 		longitude,
@@ -122,6 +136,7 @@ declare interface LocationStore {
 		longitude: number;
 		address: string;
 	}) => void;
+	resetUserLocation: () => void;
 }
 
 declare interface DriverStore {
@@ -136,4 +151,13 @@ declare interface DriverCardProps {
 	item: MarkerData;
 	selected: number;
 	setSelected: () => void;
+}
+
+declare interface ServiceProps {
+	id: number;
+	name: string;
+	image: string;
+	description: string;
+	duration: string;
+	price: string;
 }
