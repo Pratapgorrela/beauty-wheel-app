@@ -8,6 +8,7 @@ import { Image, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CustomButton from "./CustomButton";
 import { images } from "@/constants";
+import { Ionicons } from "@expo/vector-icons";
 
 const CustomDrawerContent = (props: any) => {
 	const { signOut } = useAuth();
@@ -32,12 +33,15 @@ const CustomDrawerContent = (props: any) => {
 					<DrawerItemList {...props} />
 				</View>
 			</DrawerContentScrollView>
-			<View className={`pb-[${20 + bottom}px]`}>
+			<View className={`pb-[${20 + bottom}px] flex`}>
 				<CustomButton
-					title="logout"
+					title=" logout"
 					bgVariant="danger"
 					onPress={handleSignOut}
-					className="!rounded-none"
+					IconLeft={() => (
+						<Ionicons name="log-out-outline" size={24} color={"#fff"} />
+					)}
+					className="!rounded-none text-md font-JakartaMedium"
 				/>
 			</View>
 		</View>

@@ -20,7 +20,7 @@ const DrayerLayout = () => {
 					options={{
 						drawerLabel: () => (
 							<Text
-								className={`font-JakartaMedium !text-[${path === "/home" ? "#fff" : "#000"}]`}>
+								className={`font-JakartaMedium text-md !text-[${path === "/home" ? "#fff" : "#000"}]`}>
 								Home
 							</Text>
 						),
@@ -31,10 +31,10 @@ const DrayerLayout = () => {
 									: "Pratap"}
 							</Text>
 						),
-						drawerIcon: ({ size }) => (
+						drawerIcon: () => (
 							<Ionicons
 								name="home-outline"
-								size={size}
+								size={24}
 								color={path === "/home" ? "#fff" : "#000"}
 							/>
 						),
@@ -46,15 +46,15 @@ const DrayerLayout = () => {
 					options={{
 						drawerLabel: () => (
 							<Text
-								className={`font-JakartaMedium !text-[${path === "/services" ? "#fff" : "#000"}]`}>
+								className={`font-JakartaMedium text-md !text-[${path === "/services" ? "#fff" : "#000"}]`}>
 								Services
 							</Text>
 						),
 						headerTitle: "Beauty Services",
-						drawerIcon: ({ size }) => (
+						drawerIcon: () => (
 							<Ionicons
 								name="rocket"
-								size={size}
+								size={24}
 								color={path === "/services" ? "#fff" : "#000"}
 							/>
 						),
@@ -66,15 +66,15 @@ const DrayerLayout = () => {
 					options={{
 						drawerLabel: () => (
 							<Text
-								className={`font-JakartaMedium !text-[${path === "/orders" ? "#fff" : "#000"}]`}>
+								className={`font-JakartaMedium text-md !text-[${path === "/orders" ? "#fff" : "#000"}]`}>
 								Your Orders
 							</Text>
 						),
 						headerTitle: "Orders",
-						drawerIcon: ({ size }) => (
+						drawerIcon: () => (
 							<Ionicons
 								name="bag-outline"
-								size={size}
+								size={24}
 								color={path === "/orders" ? "#fff" : "#000"}
 							/>
 						),
@@ -86,16 +86,60 @@ const DrayerLayout = () => {
 					options={{
 						drawerLabel: () => (
 							<Text
-								className={`font-JakartaMedium !text-[${path === "/profile" ? "#fff" : "#000"}]`}>
+								className={`font-JakartaMedium text-md !text-[${path === "/profile" ? "#fff" : "#000"}]`}>
 								Profile
 							</Text>
 						),
-						headerTitle: "Profile",
-						drawerIcon: ({ size }) => (
+						headerTitle: () => (
+							<Text className="text-2xl font-bold text-gray-800">
+								My Profile
+							</Text>
+						),
+						drawerIcon: () => (
 							<Ionicons
-								name="person-outline"
-								size={size}
+								name="person-circle-outline"
+								size={24}
 								color={path === "/profile" ? "#fff" : "#000"}
+							/>
+						),
+						drawerActiveBackgroundColor: "#000",
+					}}
+				/>
+				<Drawer.Screen
+					name="wallet"
+					options={{
+						drawerLabel: () => (
+							<Text
+								className={`font-JakartaMedium text-md !text-[${path === "/wallet" ? "#fff" : "#000"}]`}>
+								Wallet
+							</Text>
+						),
+						headerTitle: "Wallet",
+						drawerIcon: () => (
+							<Ionicons
+								name="wallet"
+								size={24}
+								color={path === "/wallet" ? "#fff" : "#000"}
+							/>
+						),
+						drawerActiveBackgroundColor: "#000",
+					}}
+				/>
+				<Drawer.Screen
+					name="support"
+					options={{
+						drawerLabel: () => (
+							<Text
+								className={`font-JakartaSemiBold text-md !text-[${path === "/support" ? "#fff" : "#000"}]`}>
+								Help
+							</Text>
+						),
+						headerTitle: "Support",
+						drawerIcon: () => (
+							<Ionicons
+								name="call-outline"
+								size={24}
+								color={path === "/support" ? "#fff" : "#000"}
 							/>
 						),
 						drawerActiveBackgroundColor: "#000",
