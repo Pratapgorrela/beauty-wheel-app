@@ -73,7 +73,7 @@ export default function Services() {
 			<View style={styles.searchContainer}>
 				<View style={styles.searchBar}>
 					<Ionicons name="search" size={20} color="#999" />
-					<Text style={styles.searchPlaceholder}>Search services...</Text>
+					<Text style={styles.searchPlaceholder}>Search services</Text>
 				</View>
 			</View>
 			<ScrollView
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
 	servicePrice: { fontSize: 16, fontWeight: "600", color: "#5a31f4" },
 	bottomBar: {
 		position: "absolute",
-		bottom: 38,
+		bottom: 0,
 		left: 0,
 		right: 0,
 		backgroundColor: "#fff",

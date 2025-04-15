@@ -4,7 +4,6 @@ import { icons } from "@/constants";
 import { useLocationStore } from "@/store";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 import BottomSheet from "@gorhom/bottom-sheet";
 import RideBottomSheetView from "@/components/RideBottomSheetView";
@@ -43,11 +42,6 @@ const Home = () => {
 		};
 		requestLocation();
 	}, []);
-
-	// const handleSignOut = () => {
-	// 	signOut();
-	// 	router.replace("/(auth)/sign-in");
-	// };
 
 	const handleDestinationPress = (location: {
 		latitude: number;
