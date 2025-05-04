@@ -29,7 +29,7 @@ const CustomDrawerContent = (props: any) => {
 					/>
 					<Text className="font-JakartaExtraBold self-center pt-2">Pratap</Text>
 				</View>
-				<View className="bg-white pt-2">
+				<View className="pt-2 gap-1">
 					<DrawerItemList {...props} />
 				</View>
 			</DrawerContentScrollView>
